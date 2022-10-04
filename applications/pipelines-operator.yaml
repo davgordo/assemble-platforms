@@ -19,6 +19,8 @@ spec:
           name: openshift-pipelines-operator-rh
           source: redhat-operators
           sourceNamespace: openshift-marketplace
+        operatorgroup:
+          create: false
   destination:
     server: https://kubernetes.default.svc
     namespace: openshift-operators

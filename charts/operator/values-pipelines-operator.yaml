@@ -6,3 +6,5 @@ operator:
   source: redhat-operators
   sourceNamespace: openshift-marketplace
   startingCSV: openshift-pipelines-operator-rh.v1.8.0
+operatorgroup:
+  create: false
