@@ -17,7 +17,7 @@ spec:
           channel: latest
           installPlanApproval: Automatic
           name: openshift-pipelines-operator-rh
-          sourceName: redhat-operators
+          source: redhat-operators
           sourceNamespace: openshift-marketplace
   destination:
     server: https://kubernetes.default.svc
