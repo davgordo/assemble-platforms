@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: assemble-root
+  namespace: assemble-argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/davgordo/assemble-platforms.git
+    targetRevision: bootstrap
+    path: applications
+    directory:
+      include: "*.yaml"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: assemble-argocd
+  syncPolicy:
+    automated: 
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - RespectIgnoreDifferences=true
+      - ApplyOutOfSyncOnly=true

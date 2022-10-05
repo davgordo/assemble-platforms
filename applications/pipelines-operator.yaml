@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pipelines-operator
+  namespace: assemble-argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io  
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/davgordo/assemble-platforms.git
+    targetRevision: bootstrap
+    path: charts/operator
+    helm:
+      values: | 
+        operator:
+          channel: latest
+          installPlanApproval: Automatic
+          name: openshift-pipelines-operator-rh
+          sourceName: redhat-operators
+          sourceNamespace: openshift-marketplace
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openshift-operators
+  syncPolicy:
+    automated: 
+      prune: true
+      selfHeal: true

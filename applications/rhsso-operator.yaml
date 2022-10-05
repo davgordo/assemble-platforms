@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rhsso-operator
+  namespace: assemble-argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io  
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/davgordo/assemble-platforms.git
+    targetRevision: bootstrap
+    path: charts/operator
+    helm:
+      values: | 
+        operator:
+          channel: stable
+          installPlanApproval: Automatic
+          name: rhsso-operator
+          source: redhat-operators
+          sourceNamespace: openshift-marketplace
+        operatorgroup:
+          create: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: rhsso
+  syncPolicy:
+    automated: 
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
